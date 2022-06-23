@@ -18,14 +18,14 @@ import androidx.core.view.ViewCompat
 private val DarkColorScheme = darkColorScheme(
     primary = Blue,
     secondary = Black,
-    tertiary = Black,
-    background = Black,
-    surface = Black,
-    onPrimary = Black,
+    tertiary = White,
+    background = White,
+    surface = White,
+    onPrimary = White,
     onSecondary = White,
-    onTertiary = White,
-    onBackground = White,
-    onSurface = White,
+    onTertiary = Black,
+    onBackground = Black,
+    onSurface = Black,
 
     )
 

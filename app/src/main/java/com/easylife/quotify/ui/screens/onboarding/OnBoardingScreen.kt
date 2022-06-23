@@ -1,79 +1,129 @@
 package com.easylife.quotify.ui.screens.onboarding
 
-import android.widget.Space
 import androidx.compose.animation.*
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.easylife.quotify.R
+import androidx.constraintlayout.compose.Dimension
 import com.easylife.quotify.base.BaseScreen
-import com.easylife.quotify.ui.theme.Red
+import com.easylife.quotify.ui.theme.*
+import com.google.accompanist.pager.*
 
 class OnBoardingScreen : BaseScreen<OnBoardingViewModel, OnBoardingNavigationActions>() {
 
-    @OptIn(ExperimentalAnimationApi::class)
     @Composable
     override fun Content() {
-        val brandingAnimationState = remember {
-            MutableTransitionState(false).apply {
-                targetState = true
-            }
-        }
-        val contentDrawableAnimationState = remember {
+
+        val uiState by viewModel.uiState.collectAsState()
+
+        val contentAnimationState = remember {
             MutableTransitionState(false).apply {
                 targetState = true
             }
         }
 
-        val density = LocalDensity.current
+        if (uiState.isStartClicked) {
+            LaunchedEffect(key1 = "") {
+                navigationActions.navigateToHome()
+            }
+        }
+
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AnimatedVisibility(
-                visibleState = brandingAnimationState,
-                enter = slideInVertically {
-                    with(density) { -60.dp.roundToPx() }
+                visibleState = contentAnimationState,
+                enter = fadeIn(animationSpec = tween(1000, 200))
+            ) {
+                OnBoardingContent(
+                    currentPage = uiState.currentPage,
+                    buttonName = uiState.buttonName,
+                    pageList = uiState.pageList
+                )
+            }
+        }
+    }
+
+    @OptIn(ExperimentalPagerApi::class)
+    @Composable
+    fun OnBoardingContent(
+        currentPage: Int,
+        buttonName: Int,
+        pageList: List<OnBoardingPage>
+    ) {
+        val pagerState = rememberPagerState()
+
+        LaunchedEffect(key1 = currentPage) {
+            pagerState.animateScrollToPage(currentPage)
+        }
+
+        ConstraintLayout(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(vertical = 30.dp, horizontal = 16.dp)
+        ) {
+            val (pager, bottomRow, skipButton) = createRefs()
+
+            if (currentPage != 0) {
+                Box(
+                    modifier = Modifier
+                        .constrainAs(skipButton) {
+                            top.linkTo(parent.top)
+                            start.linkTo(parent.start)
+                        }
+                        .padding(top = 10.dp, bottom = 10.dp, end = 10.dp)
+                        .clickable {
+                            viewModel.onPreviousClicked(currentPage)
+                        }
+                ) {
+                    Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = "Arrow Back")
                 }
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.quotify_brand),
-                    contentDescription = "Quotify brand"
-                )
             }
-            Spacer(modifier = Modifier.height(20.dp))
-            AnimatedVisibility(
-                visibleState = contentDrawableAnimationState,
-                enter = fadeIn(animationSpec = tween(durationMillis = 1000, delayMillis = 500)),
-                modifier = Modifier.fillMaxSize(0.5f)
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_relaxing_at_home),
-                    contentDescription = "Quotify brand"
-                )
+            HorizontalPager(
+                count = pageList.size,
+                state = pagerState,
+                modifier = Modifier.constrainAs(pager) {
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    top.linkTo(parent.top, 56.dp)
+                    bottom.linkTo(bottomRow.top)
+                    height = Dimension.fillToConstraints
+                },
+                itemSpacing = 1.dp
+            ) { pageIndex: Int ->
+                val page = pageList[pageIndex]
+                OnBoardingPagerItem(page = page)
             }
-            
-            Button(onClick = { viewModel.onForgotPasswordClicked() }) {
-                Text("Forgot password")
+            Row(
+                modifier = Modifier.constrainAs(bottomRow) {
+                    start.linkTo(parent.start, 16.dp)
+                    end.linkTo(parent.end, 16.dp)
+                    bottom.linkTo(parent.bottom)
+                    width = Dimension.matchParent
+                },
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                HorizontalPagerIndicator(
+                    pagerState = pagerState,
+                    activeColor = Blue
+                )
+                Button(onClick = {
+                    viewModel.onNextClicked(currentPage)
+                }) {
+                    Text(text = stringResource(id = buttonName))
+                }
             }
         }
     }

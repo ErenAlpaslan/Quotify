@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Quotify</string>
+
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</string>
+
+    <!-- Button text -->
+    <string name="button_next">Next</string>
+    <string name="button_start">Start</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title_first">Welcome to</string>
+    <string name="onboarding_title_second">2Welcome to2</string>
+    <string name="onboarding_title_third">3Welcome to3</string>
+    <string name="onboarding_description_first">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</string>
+    <string name="onboarding_description_second">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</string>
+    <string name="onboarding_description_third">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</string>
+
 </resources>

@@ -22,9 +22,14 @@ class QuotifyApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
+        instance = this
         startKoin {
             androidContext(this@QuotifyApplication)
             modules(moduleList)
         }
+    }
+
+    companion object {
+        lateinit var instance: QuotifyApplication
     }
 }

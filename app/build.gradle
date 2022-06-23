@@ -80,6 +80,7 @@ dependencies {
 
     def accompanist_version = "0.24.1-alpha"
     implementation "com.google.accompanist:accompanist-pager:$accompanist_version"
+    implementation "com.google.accompanist:accompanist-pager-indicators:0.10.0"
 
     def dataStore_version = "1.0.0"
     implementation("androidx.datastore:datastore-core:$dataStore_version")
@@ -88,6 +89,9 @@ dependencies {
 
     def gson_version = "2.9.0"
     implementation "com.google.code.gson:gson:$gson_version"
+
+    //Coil
+    implementation "io.coil-kt:coil-compose:2.1.0"
 
     def room_version = "2.4.1"
     // To use Kotlin annotation processing tool (kapt)
