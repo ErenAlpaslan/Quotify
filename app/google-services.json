@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "100023371083",
+    "firebase_url": "https://quotify-4fd62-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "quotify-4fd62",
+    "storage_bucket": "quotify-4fd62.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:100023371083:android:e7f8b9f29dd8740a3254ce",
+        "android_client_info": {
+          "package_name": "com.easylife.quotify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "100023371083-nloi6fn0js9u1amm7d816v1b7o0bqf5m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1nwl0Fl59Qgoog7af0QxxbgnfAdBrFD0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "100023371083-nloi6fn0js9u1amm7d816v1b7o0bqf5m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
