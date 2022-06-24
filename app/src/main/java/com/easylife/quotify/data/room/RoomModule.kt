@@ -8,14 +8,14 @@ import org.koin.dsl.module
 
 val roomModule = module {
     single { Gson() }
-    /*single {
+    single {
         Room.databaseBuilder(
             androidApplication(),
             AppDatabase::class.java,
-        AppConstant.QUOTIFY_DB_NAME)
+            AppConstant.QUOTIFY_DB_NAME)
             .fallbackToDestructiveMigration()
+            .addCallback(QuotifyRoomCallback)
             .build()
-    }*/
-    //single { get<AppDatabase>().taskDao() }
-    //single { get<AppDatabase>().categoryDao() }
+    }
+    single { get<AppDatabase>().quoteDao() }
 }

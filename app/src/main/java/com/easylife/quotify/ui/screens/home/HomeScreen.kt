@@ -13,16 +13,6 @@ import com.easylife.quotify.ui.theme.Green
 class HomeScreen: BaseScreen<HomeViewModel, HomeNavigationActions>() {
     @Composable
     override fun Content() {
-        var trigger by remember {
-            mutableStateOf(false)
-        }
-        
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .background(Green)) {
-            Button(onClick = { navController.popBackStack() }) {
-                Text(text = "Trigger")
-            }
-        }
+
     }
 }

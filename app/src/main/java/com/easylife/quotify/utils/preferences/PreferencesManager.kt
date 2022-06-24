@@ -29,4 +29,14 @@ class PreferencesManager(private val context: Context) {
         context.dataStore.edit { it[key] = value }
     }
 
+    fun getInt(
+        key: Preferences.Key<Int>,
+        defaultValue: Int = 0
+    ): Flow<Int> = context.dataStore.data.map {
+        it[key] ?: defaultValue
+    }
+
+    suspend fun setInt(key: Preferences.Key<Int>, value: Int) {
+        context.dataStore.edit { it[key] = value }
+    }
 }
