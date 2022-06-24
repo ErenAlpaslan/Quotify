@@ -1,6 +1,5 @@
 package com.easylife.quotify.ui.screens.onboarding
 
-import androidx.compose.runtime.MutableState
 import androidx.lifecycle.viewModelScope
 import com.easylife.quotify.R
 import com.easylife.quotify.base.BaseViewModel

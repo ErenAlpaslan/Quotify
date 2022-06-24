@@ -9,7 +9,6 @@ import com.easylife.quotify.ui.screens.onboarding.OnBoardingScreen
 import com.easylife.quotify.ui.screens.splash.SplashScreen
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
-import org.koin.androidx.compose.inject
 import org.koin.core.parameter.parametersOf
 
 @Composable

@@ -13,10 +13,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import com.easylife.quotify.R
-import com.easylife.quotify.ui.screens.onboarding.OnBoardingPage
 
 @Composable
 fun OnBoardingPagerItem(

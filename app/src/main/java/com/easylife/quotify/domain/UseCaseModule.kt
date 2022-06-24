@@ -1,7 +1,8 @@
 package com.easylife.quotify.domain
 
+import com.easylife.quotify.domain.usecase.GetQuoteListDataUseCase
 import org.koin.dsl.module
 
 val useCaseModule = module {
-    factory {  }
+    single { GetQuoteListDataUseCase(get(), get(), get(), get(), get()) }
 }
