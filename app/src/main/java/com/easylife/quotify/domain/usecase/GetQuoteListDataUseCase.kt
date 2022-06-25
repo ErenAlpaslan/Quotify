@@ -23,35 +23,42 @@ class GetQuoteListDataUseCase(
 ) : BaseUseCase<List<QuoteListData>, GetQuoteListDataUseCase.Param>() {
 
     data class Param(
-        val page: Int
+        val page: Int,
+        val lastSeenIndex: Int,
+        val category: String
     )
 
     override suspend fun execute(params: Param?): Flow<QuotifyResult<List<QuoteListData>>> = flow {
         params?.let {
-            remoteQuoteRepository.getQuotesWithCategoryByPage(
-                "",
-                params.page,
-                RemoteConfig.QUOTE_ROW_COUNT
-            ).collect { remoteResult ->
-                when (remoteResult) {
-                    is QuotifyResult.Error -> emit(
-                        QuotifyResult.Error<List<QuoteListData>>(
-                            remoteResult.message
+            val unShownQuotes =
+                localQuoteRepository.getUnShownQuotes().filter { it.Category == params.category }
+            Log.d("QuotesControl", "UNSHOWN SIZE => ${unShownQuotes.size}")
+
+            if (unShownQuotes.isNotEmpty() && unShownQuotes.size > RemoteConfig.QUOTE_ROW_COUNT / 2) {
+                emit(QuotifyResult.Success(quoteListDataMapper.transform(unShownQuotes)))
+            } else {
+                remoteQuoteRepository.getQuotesWithCategoryByPage(
+                    "",
+                    params.page
+                ).collect { remoteResult ->
+                    when (remoteResult) {
+                        is QuotifyResult.Error -> emit(
+                            QuotifyResult.Error<List<QuoteListData>>(
+                                remoteResult.message
+                            )
                         )
-                    )
-                    is QuotifyResult.Success -> {
-                        remoteResult.data?.let {
-                            localQuoteRepository.insertAllQuote(remoteResult.data)
-                            emit(QuotifyResult.Success(quoteListDataMapper.transform(remoteResult.data)))
-                        } ?: emit(QuotifyResult.Error<List<QuoteListData>>("Empty quote list try again later"))
+                        is QuotifyResult.Success -> {
+                            remoteResult.data?.let {
+                                val quotes = unShownQuotes + remoteResult.data
+                                localQuoteRepository.insertAllQuote(remoteResult.data)
+                                emit(QuotifyResult.Success(quoteListDataMapper.transform(quotes)))
+                            }
+                                ?: emit(QuotifyResult.Error<List<QuoteListData>>("Empty quote list try again later"))
+                        }
                     }
                 }
             }
         }
     }.flowOn(dispatchers.io)
 
-
-    companion object {
-        const val TAG = "FetchQuoteControl"
-    }
 }

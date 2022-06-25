@@ -10,8 +10,7 @@ interface RemoteQuoteRepository {
 
     suspend fun getQuotesWithCategoryByPage(
         category: String,
-        page: Int,
-        rowCount: Int
+        page: Int
     ): Flow<QuotifyResult<List<Quote>>>
 
 }

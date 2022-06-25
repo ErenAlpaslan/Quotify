@@ -18,4 +18,6 @@ interface LocalQuoteRepository {
 
     suspend fun getFavoriteQuotes(): List<Quote>
 
+    suspend fun getUnShownQuotes(): List<Quote>
+
 }

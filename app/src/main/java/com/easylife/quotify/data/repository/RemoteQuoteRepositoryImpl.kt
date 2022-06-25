@@ -19,13 +19,11 @@ class RemoteQuoteRepositoryImpl(
 
     override suspend fun getQuotesWithCategoryByPage(
         category: String,
-        page: Int,
-        rowCount: Int
+        page: Int
     ): Flow<QuotifyResult<List<Quote>>> = callbackFlow {
         remote.child(AppConstant.DATABASE_QUOTES_PATH)
             .orderByChild("Category")
             .equalTo("inspiration")
-            .limitToFirst(10)
             .get()
             .addOnSuccessListener {
                 val data = arrayListOf<Quote>()

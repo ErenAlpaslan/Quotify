@@ -40,4 +40,9 @@ class LocalQuoteRepositoryImpl(
         return quoteDao.getFavoriteQuotes()
     }
 
+    override suspend fun getUnShownQuotes(): List<Quote> {
+        return quoteDao.getUnShownQuotes()
+    }
+
+
 }

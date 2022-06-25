@@ -22,14 +22,16 @@ class HomeViewModel(
     }
 
     init {
-        fetchQuoteListData()
+        fetchInitialData()
     }
 
-    fun fetchQuoteListData() {
+    private fun fetchInitialData() {
         viewModelScope.launch {
             getQuoteListDataUseCase.execute(
                 GetQuoteListDataUseCase.Param(
-                    _uiState.value.page
+                    _uiState.value.page,
+                    0,
+                    "inspiration"
                 )
             ).collect { result ->
                 when (result) {
