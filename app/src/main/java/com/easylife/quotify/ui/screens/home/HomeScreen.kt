@@ -63,7 +63,7 @@ class HomeScreen : BaseScreen<HomeViewModel, HomeNavigationActions>() {
                 content = { paddingValues ->
                     HomeContent(
                         selectedTheme = "",
-                        contentList = emptyList(),
+                        contentList = uiState.data ?: emptyList(),
                         onShareClicked = {
                             coroutineScope.launch {
                                 quotifyBottomSheetScaffoldState.bottomSheetState.expand()

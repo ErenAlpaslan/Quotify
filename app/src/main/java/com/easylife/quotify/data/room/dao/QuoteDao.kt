@@ -15,7 +15,7 @@ interface QuoteDao {
     @Insert
     suspend fun insertAllQuote(quotes: List<Quote>)
 
-    @Query("SELECT * FROM Quotes WHERE category = :category LIMIT :limit OFFSET :offset")
+    @Query("SELECT * FROM Quotes WHERE Category = :category LIMIT :limit OFFSET :offset")
     suspend fun getQuotesWithCategoryByPage(category: String, limit: Int, offset: Int): List<Quote>
 
     @Query("SELECT * FROM Quotes WHERE id = :id")

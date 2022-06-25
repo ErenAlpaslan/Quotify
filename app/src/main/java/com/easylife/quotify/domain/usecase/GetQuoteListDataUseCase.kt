@@ -28,14 +28,11 @@ class GetQuoteListDataUseCase(
 
     override suspend fun execute(params: Param?): Flow<QuotifyResult<List<QuoteListData>>> = flow {
         params?.let {
-            Log.d(TAG, "=> executing")
             remoteQuoteRepository.getQuotesWithCategoryByPage(
                 "",
                 params.page,
                 RemoteConfig.QUOTE_ROW_COUNT
             ).collect { remoteResult ->
-                Log.d(TAG, "remote: $remoteResult")
-
                 when (remoteResult) {
                     is QuotifyResult.Error -> emit(
                         QuotifyResult.Error<List<QuoteListData>>(

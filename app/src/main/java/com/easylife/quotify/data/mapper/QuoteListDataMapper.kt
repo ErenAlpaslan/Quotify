@@ -8,7 +8,7 @@ class QuoteListDataMapper: DataMapper<Quote, List<QuoteListData>> {
     override fun transform(list: List<Quote>): List<QuoteListData> {
         val transformedList = arrayListOf<QuoteListData>()
         list.forEachIndexed { index, quote ->
-            if (index % ADS_OFFSET == 0) {
+            if (index % ADS_OFFSET == 0 && index > 0) {
                 transformedList.add(QuoteListData.Ads)
             }
             transformedList.add(QuoteListData.Content(quote))

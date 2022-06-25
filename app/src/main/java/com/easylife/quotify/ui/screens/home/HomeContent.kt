@@ -1,5 +1,6 @@
 package com.easylife.quotify.ui.screens.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -12,9 +13,15 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.easylife.quotify.data.models.Quote
 import com.easylife.quotify.data.models.QuoteListData
+import com.easylife.quotify.ui.theme.Red
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.VerticalPager
+import com.google.accompanist.pager.rememberPagerState
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun HomeContent(
     selectedTheme: String,
@@ -27,25 +34,28 @@ fun HomeContent(
         mutableStateOf(if (contentList.isNotEmpty()) contentList[0] else null)
     }
 
+    var pagerState = rememberPagerState()
+
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
             .padding(paddingValues = paddingValues)
     ) {
         val (quoteRef, actionRowRef) = createRefs()
-        LazyColumn(
+        VerticalPager(
+            count = contentList.size,
             modifier = Modifier
                 .constrainAs(quoteRef) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                     bottom.linkTo(actionRowRef.top)
-                }
-        ) {
-            itemsIndexed(contentList) { _, item ->
-                seenItem = item
-                QuoteListItem(item = item)
-            }
+                },
+            state = pagerState,
+        ) { pageIndex: Int ->
+            val item = contentList[pageIndex]
+            seenItem = contentList[pagerState.currentPage]
+            QuoteListItem(item = item)
         }
         Row(
             horizontalArrangement = Arrangement.SpaceAround,
