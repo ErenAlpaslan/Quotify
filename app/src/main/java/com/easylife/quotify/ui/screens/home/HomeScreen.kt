@@ -1,6 +1,7 @@
 package com.easylife.quotify.ui.screens.home
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,10 +16,8 @@ import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -34,9 +33,6 @@ class HomeScreen : BaseScreen<HomeViewModel, HomeNavigationActions>() {
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
     @Composable
     override fun Content() {
-
-        val uiState by viewModel.uiState.collectAsState()
-
         val quotifyBottomSheetScaffoldState = rememberBottomSheetScaffoldState(
             bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
         )
@@ -62,8 +58,7 @@ class HomeScreen : BaseScreen<HomeViewModel, HomeNavigationActions>() {
                 },
                 content = { paddingValues ->
                     HomeContent(
-                        selectedTheme = "",
-                        contentList = uiState.data ?: emptyList(),
+                        viewModel = viewModel,
                         onShareClicked = {
                             coroutineScope.launch {
                                 quotifyBottomSheetScaffoldState.bottomSheetState.expand()
@@ -71,6 +66,9 @@ class HomeScreen : BaseScreen<HomeViewModel, HomeNavigationActions>() {
                         },
                         onFavClicked = { quote ->
                             viewModel.onFavClicked(quote)
+                        },
+                        onNewQuoteSeen = { listData ->
+                            viewModel.onNewQuoteSeen(listData)
                         },
                         paddingValues = paddingValues
                     )

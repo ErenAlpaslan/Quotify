@@ -6,6 +6,6 @@ import org.koin.dsl.module
 
 val homeModule = module {
     factory { HomeScreen() }
-    viewModel { HomeViewModel(get(), get()) }
+    viewModel { HomeViewModel(get(), get(), get(), get()) }
     factory { (navController: NavController) -> HomeNavigationActions(navController = navController) }
 }

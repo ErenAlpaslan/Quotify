@@ -1,5 +1,6 @@
 package com.easylife.quotify.ui.screens.home
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -8,9 +9,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material.icons.rounded.Share
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -24,14 +27,21 @@ import com.google.accompanist.pager.rememberPagerState
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun HomeContent(
-    selectedTheme: String,
-    contentList: List<QuoteListData>,
+    viewModel: HomeViewModel,
     onShareClicked: (Quote) -> Unit,
-    onFavClicked: (Quote) -> Unit,
+    onFavClicked: (QuoteListData) -> Unit,
+    onNewQuoteSeen: (QuoteListData?) -> Unit,
     paddingValues: PaddingValues
 ) {
+    val uiState by viewModel.uiState.collectAsState()
+
     var seenItem: QuoteListData? by remember {
-        mutableStateOf(if (contentList.isNotEmpty()) contentList[0] else null)
+        mutableStateOf(if (uiState.data.isNotEmpty()) uiState.data.get(0) else null)
+    }
+    seenItem = uiState.currentQuote
+
+    var isFavorite by remember(seenItem) {
+        mutableStateOf(if (seenItem is QuoteListData.Content) (seenItem as QuoteListData.Content).model.isFavorite else false )
     }
 
     var pagerState = rememberPagerState()
@@ -43,7 +53,7 @@ fun HomeContent(
     ) {
         val (quoteRef, actionRowRef) = createRefs()
         VerticalPager(
-            count = contentList.size,
+            count = uiState.data.size ?: 0,
             modifier = Modifier
                 .constrainAs(quoteRef) {
                     top.linkTo(parent.top)
@@ -53,8 +63,8 @@ fun HomeContent(
                 },
             state = pagerState,
         ) { pageIndex: Int ->
-            val item = contentList[pageIndex]
-            seenItem = contentList[pagerState.currentPage]
+            val item = uiState.data.get(pageIndex)
+            onNewQuoteSeen(uiState.data.get(pagerState.currentPage))
             QuoteListItem(item = item)
         }
         Row(
@@ -69,9 +79,12 @@ fun HomeContent(
                 IconButton(onClick = { onShareClicked((seenItem as QuoteListData.Content).model) }) {
                     Icon(imageVector = Icons.Rounded.Share, contentDescription = "Share")
                 }
-                IconButton(onClick = { onFavClicked((seenItem as QuoteListData.Content).model) }) {
+                IconButton(onClick = {
+                    onFavClicked((seenItem as QuoteListData.Content))
+                    isFavorite = isFavorite.not()
+                }) {
                     Icon(
-                        imageVector = if ((seenItem as QuoteListData.Content).model.isFavorite) {
+                        imageVector = if (isFavorite) {
                             Icons.Rounded.Favorite
                         } else {
                             Icons.Rounded.FavoriteBorder

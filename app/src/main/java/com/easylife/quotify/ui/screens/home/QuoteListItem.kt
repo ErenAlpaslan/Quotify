@@ -13,7 +13,7 @@ import com.easylife.quotify.ui.theme.Green
 
 @Composable
 fun QuoteListItem(
-    item: QuoteListData
+    item: QuoteListData?
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
