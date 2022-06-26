@@ -8,7 +8,7 @@ interface LocalQuoteRepository {
 
     suspend fun insertAllQuote(quotes: List<Quote>)
 
-    suspend fun getQuotesWithCategoryByPage(category: String, limit: Int, offset: Int): List<Quote>
+    suspend fun getQuotesByCategory(category: String): List<Quote>
 
     suspend fun getQuoteById(id: Int): Quote
 
@@ -18,6 +18,5 @@ interface LocalQuoteRepository {
 
     suspend fun getFavoriteQuotes(): List<Quote>
 
-    suspend fun getUnShownQuotes(): List<Quote>
-
+    suspend fun deleteQuotesByCategory(category: String)
 }

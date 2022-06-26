@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/bg_splash.xml" value="0.1" />
+        <entry key="app/src/main/res/xml/remote_config_defaults.xml" value="0.19610507246376813" />
       </map>
     </option>
   </component>

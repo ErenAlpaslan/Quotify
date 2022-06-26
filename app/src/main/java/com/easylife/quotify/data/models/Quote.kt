@@ -8,8 +8,8 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "Quotes")
 @Parcelize
 data class Quote(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,
+    @PrimaryKey
+    var id: String = "",
     val Author: String? = "",
     val Category: String? = "",
     val Quote: String? = "",

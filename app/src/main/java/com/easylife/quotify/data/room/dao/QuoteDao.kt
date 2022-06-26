@@ -12,8 +12,8 @@ interface QuoteDao {
     @Insert
     suspend fun insertAllQuote(quotes: List<Quote>)
 
-    @Query("SELECT * FROM Quotes WHERE Category = :category LIMIT :limit OFFSET :offset")
-    suspend fun getQuotesWithCategoryByPage(category: String, limit: Int, offset: Int): List<Quote>
+    @Query("SELECT * FROM Quotes WHERE Category = :category")
+    suspend fun getQuotesByCategory(category: String): List<Quote>
 
     @Query("SELECT * FROM Quotes WHERE id = :id")
     suspend fun getQuoteById(id: Int): Quote
@@ -27,7 +27,7 @@ interface QuoteDao {
     @Query("SELECT * FROM Quotes WHERE isFavorite = 1")
     suspend fun getFavoriteQuotes(): List<Quote>
 
-    @Query("SELECT * FROM Quotes WHERE isShown = 0")
-    suspend fun getUnShownQuotes(): List<Quote>
+    @Query("DELETE FROM Quotes WHERE Category = :category")
+    suspend fun deleteQuotesByCategory(category: String)
 
 }

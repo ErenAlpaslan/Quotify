@@ -1,10 +1,10 @@
 package com.easylife.quotify.domain
 
-import com.easylife.quotify.domain.usecase.FetchInitialQuotesUseCase
-import com.easylife.quotify.domain.usecase.GetQuoteListDataUseCase
+import com.easylife.quotify.domain.usecase.CacheQuoteListByCategoryUseCase
+import com.easylife.quotify.domain.usecase.GetQuoteListByCategoryUseCase
 import org.koin.dsl.module
 
 val useCaseModule = module {
-    single { GetQuoteListDataUseCase(get(), get(), get(), get(), get()) }
-    single { FetchInitialQuotesUseCase(get(), get(), get()) }
+    single { CacheQuoteListByCategoryUseCase(get(), get(), get()) }
+    single { GetQuoteListByCategoryUseCase(get(), get(), get(), get()) }
 }

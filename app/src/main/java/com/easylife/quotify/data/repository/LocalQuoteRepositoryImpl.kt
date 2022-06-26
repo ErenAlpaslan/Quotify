@@ -3,9 +3,10 @@ package com.easylife.quotify.data.repository
 import com.easylife.quotify.data.models.Quote
 import com.easylife.quotify.data.room.dao.QuoteDao
 import com.easylife.quotify.domain.repository.LocalQuoteRepository
+import com.easylife.quotify.utils.integration.config.QuotifyConfig
 
 class LocalQuoteRepositoryImpl(
-    private val quoteDao: QuoteDao
+    private val quoteDao: QuoteDao,
 ): LocalQuoteRepository {
 
     override suspend fun insertQuote(quote: Quote) {
@@ -16,12 +17,8 @@ class LocalQuoteRepositoryImpl(
         quoteDao.insertAllQuote(quotes = quotes)
     }
 
-    override suspend fun getQuotesWithCategoryByPage(
-        category: String,
-        limit: Int,
-        offset: Int
-    ): List<Quote> {
-        return quoteDao.getQuotesWithCategoryByPage(category, limit, offset)
+    override suspend fun getQuotesByCategory(category: String): List<Quote> {
+        return quoteDao.getQuotesByCategory(category)
     }
 
     override suspend fun getQuoteById(id: Int): Quote {
@@ -40,8 +37,8 @@ class LocalQuoteRepositoryImpl(
         return quoteDao.getFavoriteQuotes()
     }
 
-    override suspend fun getUnShownQuotes(): List<Quote> {
-        return quoteDao.getUnShownQuotes()
+    override suspend fun deleteQuotesByCategory(category: String) {
+        return quoteDao.deleteQuotesByCategory(category = category)
     }
 
 

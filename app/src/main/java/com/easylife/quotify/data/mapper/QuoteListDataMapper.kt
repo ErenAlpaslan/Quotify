@@ -2,13 +2,16 @@ package com.easylife.quotify.data.mapper
 
 import com.easylife.quotify.data.models.Quote
 import com.easylife.quotify.data.models.QuoteListData
+import com.easylife.quotify.utils.integration.config.QuotifyConfig
 
-class QuoteListDataMapper: DataMapper<Quote, List<QuoteListData>> {
+class QuoteListDataMapper(
+    private val quotifyConfig: QuotifyConfig
+) : DataMapper<List<Quote>?, List<QuoteListData>> {
 
-    override fun transform(list: List<Quote>): List<QuoteListData> {
+    override fun transform(t: List<Quote>?): List<QuoteListData> {
         val transformedList = arrayListOf<QuoteListData>()
-        list.forEachIndexed { index, quote ->
-            if (index % ADS_OFFSET == 0 && index > 0) {
+        t?.forEachIndexed { index, quote ->
+            if (index % quotifyConfig.getConfig().adsPerQuote == 0 && index > 0) {
                 transformedList.add(QuoteListData.Ads)
             }
             transformedList.add(QuoteListData.Content(quote))
@@ -16,9 +19,4 @@ class QuoteListDataMapper: DataMapper<Quote, List<QuoteListData>> {
 
         return transformedList
     }
-
-    companion object {
-        const val ADS_OFFSET = 5
-    }
-
 }

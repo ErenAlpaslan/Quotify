@@ -10,11 +10,12 @@ import com.easylife.quotify.ui.screens.home.homeModule
 import com.easylife.quotify.ui.screens.onboarding.onBoardingModule
 import com.easylife.quotify.ui.screens.splash.splashModule
 import com.easylife.quotify.utils.integration.config.remoteConfigModule
+import com.google.firebase.FirebaseApp
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 
-class QuotifyApplication: Application() {
+class QuotifyApplication : Application() {
 
     private val moduleList = listOf<Module>(
         appModule,
@@ -31,6 +32,7 @@ class QuotifyApplication: Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        FirebaseApp.initializeApp(this@QuotifyApplication.applicationContext)
         startKoin {
             androidContext(this@QuotifyApplication)
             modules(moduleList)

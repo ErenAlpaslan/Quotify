@@ -8,9 +8,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface RemoteQuoteRepository {
 
-    suspend fun getQuotesWithCategoryByPage(
-        category: String,
-        page: Int
+    suspend fun getQuotesWithCategory(
+        category: String
     ): Flow<QuotifyResult<List<Quote>>>
 
 }
