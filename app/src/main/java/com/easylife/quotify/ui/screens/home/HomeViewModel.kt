@@ -26,16 +26,8 @@ class HomeViewModel(
 ) : BaseViewModel() {
 
     private val _uiState: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState())
-    val uiState = _uiState
-        .stateIn(
-            viewModelScope,
-            SharingStarted.Eagerly,
-            _uiState.value
-        )
-
-    /*private val _uiState: MutableLiveData<HomeUiState> = MutableLiveData(HomeUiState())
-    val uiState: LiveData<HomeUiState> = _uiState*/
-
+    val uiState: StateFlow<HomeUiState> =
+        _uiState.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), _uiState.value)
 
     init {
         fetchInitialData()
@@ -57,7 +49,6 @@ class HomeViewModel(
                     is QuotifyResult.Error -> _error.postValue(result.message)
                     is QuotifyResult.Success -> {
                         result.data?.let { list ->
-                            //_uiState.postValue(_uiState.value?.copy(data = list))
                             _uiState.update {
                                 it.copy(data = list)
                             }
@@ -79,7 +70,8 @@ class HomeViewModel(
                                 _uiState.update {
                                     it.copy(
                                         data = map.values.first(),
-                                        currentQuote = map.keys.first() as QuoteListData.Content
+                                        currentQuote = map.keys.first() as QuoteListData.Content,
+                                        recompose = it.recompose.not()
                                     )
                                 }
                             }

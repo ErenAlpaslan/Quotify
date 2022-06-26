@@ -27,23 +27,12 @@ import com.google.accompanist.pager.rememberPagerState
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun HomeContent(
-    viewModel: HomeViewModel,
-    onShareClicked: (Quote) -> Unit,
+    uiState: HomeUiState,
+    onShareClicked: (QuoteListData) -> Unit,
     onFavClicked: (QuoteListData) -> Unit,
     onNewQuoteSeen: (QuoteListData?) -> Unit,
     paddingValues: PaddingValues
 ) {
-    val uiState by viewModel.uiState.collectAsState()
-
-    var seenItem: QuoteListData? by remember {
-        mutableStateOf(if (uiState.data.isNotEmpty()) uiState.data.get(0) else null)
-    }
-    seenItem = uiState.currentQuote
-
-    var isFavorite by remember(seenItem) {
-        mutableStateOf(if (seenItem is QuoteListData.Content) (seenItem as QuoteListData.Content).model.isFavorite else false )
-    }
-
     var pagerState = rememberPagerState()
 
     ConstraintLayout(
@@ -75,16 +64,17 @@ fun HomeContent(
                 bottom.linkTo(parent.bottom)
             }
         ) {
-            if (seenItem is QuoteListData.Content) {
-                IconButton(onClick = { onShareClicked((seenItem as QuoteListData.Content).model) }) {
+            if (uiState.currentQuote is QuoteListData.Content) {
+                IconButton(onClick = {
+                    onShareClicked(uiState.currentQuote)
+                }) {
                     Icon(imageVector = Icons.Rounded.Share, contentDescription = "Share")
                 }
                 IconButton(onClick = {
-                    onFavClicked((seenItem as QuoteListData.Content))
-                    isFavorite = isFavorite.not()
+                    onFavClicked(uiState.currentQuote)
                 }) {
                     Icon(
-                        imageVector = if (isFavorite) {
+                        imageVector = if (uiState.currentQuote.model.isFavorite) {
                             Icons.Rounded.Favorite
                         } else {
                             Icons.Rounded.FavoriteBorder

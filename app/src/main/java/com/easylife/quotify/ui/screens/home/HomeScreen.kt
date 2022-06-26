@@ -25,6 +25,7 @@ import com.easylife.quotify.R
 import com.easylife.quotify.base.BaseScreen
 import com.easylife.quotify.ui.view.QuotifyBottomSheet
 import com.easylife.quotify.ui.view.QuotifyIconButton
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class HomeScreen : BaseScreen<HomeViewModel, HomeNavigationActions>() {
@@ -33,6 +34,8 @@ class HomeScreen : BaseScreen<HomeViewModel, HomeNavigationActions>() {
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
     @Composable
     override fun Content() {
+        val uiState by viewModel.uiState.collectAsState()
+
         val quotifyBottomSheetScaffoldState = rememberBottomSheetScaffoldState(
             bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
         )
@@ -58,7 +61,7 @@ class HomeScreen : BaseScreen<HomeViewModel, HomeNavigationActions>() {
                 },
                 content = { paddingValues ->
                     HomeContent(
-                        viewModel = viewModel,
+                        uiState = uiState,
                         onShareClicked = {
                             coroutineScope.launch {
                                 quotifyBottomSheetScaffoldState.bottomSheetState.expand()

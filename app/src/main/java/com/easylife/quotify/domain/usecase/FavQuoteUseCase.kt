@@ -21,9 +21,22 @@ class FavQuoteUseCase(
 
     override suspend fun execute(params: Param): Flow<QuotifyResult<Map<QuoteListData, List<QuoteListData>>>> = flow {
         try {
+            var quote: QuoteListData.Content? = null
             if (params.quote is QuoteListData.Content) {
                 params.quote.apply {
                     model.isFavorite = model.isFavorite.not()
+                    quote = QuoteListData.Content(
+                        model = Quote(
+                            id = model.id,
+                            Author = model.Author,
+                            Category = model.Category,
+                            Quote = model.Quote,
+                            popularity = model.popularity,
+                            isFavorite = model.isFavorite,
+                            isCollected = model.isCollected,
+                            isShown = model.isShown
+                        )
+                    )
                 }
                 params.quotes?.find {
                     it is QuoteListData.Content && it.model.id == params.quote.model.id
@@ -33,8 +46,9 @@ class FavQuoteUseCase(
 
                 localQuoteRepository.updateQuote(params.quote.model)
             }
+
             emit(QuotifyResult.Success(
-                mapOf(params.quote to (params.quotes ?: emptyList()))
+                mapOf((quote as QuoteListData) to (params.quotes ?: emptyList()))
             ))
         }catch (e: Exception) {
             emit(QuotifyResult.Error(e.message))
