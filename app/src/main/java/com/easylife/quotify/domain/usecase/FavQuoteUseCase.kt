@@ -28,10 +28,9 @@ class FavQuoteUseCase(
                     quote = QuoteListData.Content(
                         model = Quote(
                             id = model.id,
-                            Author = model.Author,
-                            Category = model.Category,
-                            Quote = model.Quote,
-                            popularity = model.popularity,
+                            author = model.author,
+                            category = model.category,
+                            quote = model.quote,
                             isFavorite = model.isFavorite,
                             isCollected = model.isCollected,
                             isShown = model.isShown

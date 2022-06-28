@@ -78,9 +78,11 @@ dependencies {
     // Jetpack Compose Integration
     implementation "androidx.navigation:navigation-compose:2.5.0-rc02"
 
+    //Accompanist
     def accompanist_version = "0.24.1-alpha"
     implementation "com.google.accompanist:accompanist-pager:$accompanist_version"
-    implementation "com.google.accompanist:accompanist-pager-indicators:0.10.0"
+    implementation "com.google.accompanist:accompanist-pager-indicators:$accompanist_version"
+    implementation "com.google.accompanist:accompanist-navigation-animation:0.24.11-rc"
 
     def dataStore_version = "1.0.0"
     implementation("androidx.datastore:datastore-core:$dataStore_version")

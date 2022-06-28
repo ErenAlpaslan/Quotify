@@ -12,7 +12,7 @@ interface QuoteDao {
     @Insert
     suspend fun insertAllQuote(quotes: List<Quote>)
 
-    @Query("SELECT * FROM Quotes WHERE Category = :category")
+    @Query("SELECT * FROM Quotes WHERE category = :category")
     suspend fun getQuotesByCategory(category: String): List<Quote>
 
     @Query("SELECT * FROM Quotes WHERE id = :id")
@@ -21,13 +21,10 @@ interface QuoteDao {
     @Update
     suspend fun updateQuote(quote: Quote)
 
-    @Query("SELECT * FROM Quotes WHERE isFavorite = 1 LIMIT :limit OFFSET :offset")
-    suspend fun getFavoriteQuotesByPage(limit: Int, offset: Int): List<Quote>
-
     @Query("SELECT * FROM Quotes WHERE isFavorite = 1")
     suspend fun getFavoriteQuotes(): List<Quote>
 
-    @Query("DELETE FROM Quotes WHERE Category = :category")
+    @Query("DELETE FROM Quotes WHERE category = :category")
     suspend fun deleteQuotesByCategory(category: String)
 
 }

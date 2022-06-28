@@ -30,10 +30,10 @@ fun QuotifyBottomSheet(
                 Text("Share")
             }
         },
-        sheetPeekHeight = 0.dp,
         content = {
             content()
         },
+        sheetPeekHeight = 0.dp,
         scaffoldState = bottomSheetState
     )
 }

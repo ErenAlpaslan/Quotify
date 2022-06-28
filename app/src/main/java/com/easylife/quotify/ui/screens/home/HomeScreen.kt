@@ -2,6 +2,7 @@ package com.easylife.quotify.ui.screens.home
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -52,7 +53,7 @@ class HomeScreen : BaseScreen<HomeViewModel, HomeNavigationActions>() {
                             QuotifyIconButton(
                                 icon = R.drawable.ic_crown,
                                 onClick = {
-                                    navigationActions.navigateToPaywall
+                                    navigationActions.navigateToPaywall()
                                 }
                             )
                         },
@@ -87,7 +88,7 @@ class HomeScreen : BaseScreen<HomeViewModel, HomeNavigationActions>() {
                             icon = Icons.Rounded.FavoriteBorder,
                             text = stringResource(id = R.string.button_favorites),
                             onClick = {
-                                navigationActions.navigateToFavorites
+                                navigationActions.navigateToFavorites()
                             }
                         )
 
@@ -95,13 +96,13 @@ class HomeScreen : BaseScreen<HomeViewModel, HomeNavigationActions>() {
                             QuotifyIconButton(
                                 icon = R.drawable.ic_brush,
                                 onClick = {
-                                    navigationActions.navigateToThemeSelection
+                                    navigationActions.navigateToThemeSelection()
                                 }
                             )
                             QuotifyIconButton(
                                 icon = Icons.Rounded.Person,
                                 onClick = {
-                                    navigationActions.navigateToSettings
+                                    navigationActions.navigateToSettings()
                                 }
                             )
                         }

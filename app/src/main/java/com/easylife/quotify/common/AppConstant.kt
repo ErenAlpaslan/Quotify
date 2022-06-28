@@ -9,6 +9,7 @@ object AppConstant {
 
     //Database
     const val QUOTIFY_DB_NAME = "Quotify.db"
+    const val QUOTIFY_DB_PATH = "database/QuotifyDb.db"
     const val DATABASE_QUOTES_PATH = "quotes"
     const val DATABASE_CATEGORY_PATH = "Category"
 }

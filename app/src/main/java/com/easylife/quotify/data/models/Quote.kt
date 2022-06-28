@@ -10,10 +10,9 @@ import kotlinx.parcelize.Parcelize
 data class Quote(
     @PrimaryKey
     var id: String = "",
-    val Author: String? = "",
-    val Category: String? = "",
-    val Quote: String? = "",
-    val popularity: Long? = null,
+    val author: String? = "",
+    val category: String? = "",
+    val quote: String? = "",
     var isFavorite: Boolean = false,
     var isCollected: Boolean = false,
     var isShown: Boolean = false

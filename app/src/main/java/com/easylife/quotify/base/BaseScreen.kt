@@ -1,6 +1,9 @@
 package com.easylife.quotify.base
 
 import android.util.Log
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -10,6 +13,7 @@ import androidx.navigation.NavController
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import org.koin.core.component.inject
+import java.lang.annotation.Inherited
 
 abstract class BaseScreen<VM: BaseViewModel, AC: BaseActions>: KoinComponent {
 
@@ -21,10 +25,10 @@ abstract class BaseScreen<VM: BaseViewModel, AC: BaseActions>: KoinComponent {
 
     @Composable
     fun Create(viewModel: VM, navController: NavController, navigationActions: AC) {
-        this.viewModel = viewModel
-        this.navController = navController
-        this.focusManager = LocalFocusManager.current
-        this.navigationActions = navigationActions
+        this@BaseScreen.viewModel = viewModel
+        this@BaseScreen.navController = navController
+        this@BaseScreen.focusManager = LocalFocusManager.current
+        this@BaseScreen.navigationActions = navigationActions
 
         val error by viewModel.error.observeAsState()
         if (error != null) {

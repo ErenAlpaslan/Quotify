@@ -29,7 +29,7 @@ fun QuoteListItem(
             }
             is QuoteListData.Content -> {
                 Text(
-                    text = item.model.Quote ?: "",
+                    text = item.model.quote ?: "",
                     modifier = Modifier.padding(horizontal = 16.dp),
                     textAlign = TextAlign.Center
                 )

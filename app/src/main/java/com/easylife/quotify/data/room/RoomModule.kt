@@ -13,6 +13,7 @@ val roomModule = module {
             androidApplication(),
             AppDatabase::class.java,
             AppConstant.QUOTIFY_DB_NAME)
+            .createFromAsset(AppConstant.QUOTIFY_DB_PATH)
             .fallbackToDestructiveMigration()
             .addCallback(QuotifyRoomCallback)
             .build()

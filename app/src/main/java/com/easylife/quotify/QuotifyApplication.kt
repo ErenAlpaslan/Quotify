@@ -6,9 +6,13 @@ import com.easylife.quotify.data.mapper.mapperModule
 import com.easylife.quotify.data.repositoryModule
 import com.easylife.quotify.data.room.roomModule
 import com.easylife.quotify.domain.useCaseModule
+import com.easylife.quotify.ui.screens.favorites.favoriteModule
 import com.easylife.quotify.ui.screens.home.homeModule
 import com.easylife.quotify.ui.screens.onboarding.onBoardingModule
+import com.easylife.quotify.ui.screens.paywall.paywallModule
+import com.easylife.quotify.ui.screens.settings.settingModule
 import com.easylife.quotify.ui.screens.splash.splashModule
+import com.easylife.quotify.ui.screens.theme.themeSelectionModule
 import com.easylife.quotify.utils.integration.config.remoteConfigModule
 import com.google.firebase.FirebaseApp
 import org.koin.android.ext.koin.androidContext
@@ -26,7 +30,11 @@ class QuotifyApplication : Application() {
         mapperModule,
         splashModule,
         onBoardingModule,
-        homeModule
+        homeModule,
+        themeSelectionModule,
+        settingModule,
+        paywallModule,
+        favoriteModule
     )
 
     override fun onCreate() {

@@ -14,8 +14,6 @@ interface LocalQuoteRepository {
 
     suspend fun updateQuote(quote: Quote)
 
-    suspend fun getFavoriteQuotesByPage(limit: Int, offset: Int): List<Quote>
-
     suspend fun getFavoriteQuotes(): List<Quote>
 
     suspend fun deleteQuotesByCategory(category: String)

@@ -29,10 +29,6 @@ class LocalQuoteRepositoryImpl(
         quoteDao.updateQuote(quote)
     }
 
-    override suspend fun getFavoriteQuotesByPage(limit: Int, offset: Int): List<Quote> {
-        return quoteDao.getFavoriteQuotesByPage(limit, offset)
-    }
-
     override suspend fun getFavoriteQuotes(): List<Quote> {
         return quoteDao.getFavoriteQuotes()
     }
