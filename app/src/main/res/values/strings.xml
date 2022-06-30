@@ -7,6 +7,7 @@
     <string name="button_next">Next</string>
     <string name="button_start">Start</string>
     <string name="button_favorites">Favoriler</string>
+    <string name="button_buy_premium">Premium\'a geç</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title_first">Welcome to</string>
@@ -16,6 +17,11 @@
     <string name="onboarding_description_second">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</string>
     <string name="onboarding_description_third">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</string>
 
-
+    <!-- Settings -->
+    <string name="settings_list_setting_title">Ayarlar</string>
+    <string name="settings_list_quotes_title">Alıntıların</string>
+    <string name="settings_notification">Hatırlatıcılar</string>
+    <string name="settings_favorites">Favoriler</string>
+    <string name="settings_seen">Görülmüş alıntılar</string>
 
 </resources>
