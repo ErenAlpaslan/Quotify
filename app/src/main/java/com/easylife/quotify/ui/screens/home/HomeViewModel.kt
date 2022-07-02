@@ -29,15 +29,12 @@ class HomeViewModel(
     val uiState: StateFlow<HomeUiState> =
         _uiState.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), _uiState.value)
 
-    init {
-        fetchInitialData()
-    }
-
     /**
      * TODO: category kullanıcı tarafından seçilmediyse app configden alaınacak
      *  - lastSeenIndex kontrolü yapılıp prefences'dan alınacak
      */
-    private fun fetchInitialData() {
+    fun fetchInitialData() {
+        Log.d("HomeControl", "=> FETCHED")
         viewModelScope.launch {
             getQuoteListByCategoryUseCase.execute(
                 GetQuoteListByCategoryUseCase.Param(
@@ -50,7 +47,10 @@ class HomeViewModel(
                     is QuotifyResult.Success -> {
                         result.data?.let { list ->
                             _uiState.update {
-                                it.copy(data = list)
+                                it.copy(
+                                    data = list,
+                                    recompose = it.recompose.not(),
+                                )
                             }
                         }
                     }

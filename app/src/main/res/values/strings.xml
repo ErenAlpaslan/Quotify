@@ -24,4 +24,8 @@
     <string name="settings_favorites">Favoriler</string>
     <string name="settings_seen">Görülmüş alıntılar</string>
 
+    <!-- Favorites -->
+    <string name="favorites_share_quote">Alıntıyı paylaş</string>
+    <string name="favorites_delete">Kaldır</string>
+
 </resources>

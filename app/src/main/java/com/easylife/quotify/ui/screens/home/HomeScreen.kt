@@ -20,10 +20,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
 import com.easylife.quotify.R
 import com.easylife.quotify.base.BaseScreen
+import com.easylife.quotify.ui.view.OnLifecycleEvent
 import com.easylife.quotify.ui.view.QuotifyBottomSheet
 import com.easylife.quotify.ui.view.QuotifyIconButton
 import kotlinx.coroutines.flow.collect
@@ -42,6 +45,13 @@ class HomeScreen : BaseScreen<HomeViewModel, HomeNavigationActions>() {
         )
 
         val coroutineScope = rememberCoroutineScope()
+
+        OnLifecycleEvent { _, event ->
+            when(event) {
+                Lifecycle.Event.ON_RESUME -> viewModel.fetchInitialData()
+                else -> {}
+            }
+        }
 
         QuotifyBottomSheet(bottomSheetState = quotifyBottomSheetScaffoldState) {
             Scaffold(

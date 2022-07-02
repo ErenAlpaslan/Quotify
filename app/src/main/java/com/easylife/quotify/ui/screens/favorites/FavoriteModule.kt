@@ -6,6 +6,6 @@ import org.koin.dsl.module
 
 val favoriteModule = module {
     factory { FavoriteScreen() }
-    viewModel { FavoriteViewModel() }
+    viewModel { FavoriteViewModel(get(), get()) }
     factory {(navController: NavController) -> FavoriteNavigationActions(navController) }
 }

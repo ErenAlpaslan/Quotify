@@ -1,7 +1,5 @@
 package com.easylife.quotify.ui.screens.home
 
-import androidx.compose.runtime.Immutable
-import com.easylife.quotify.base.BaseUiState
 import com.easylife.quotify.data.models.QuoteListData
 
 data class HomeUiState(
