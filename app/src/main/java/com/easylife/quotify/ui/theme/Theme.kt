@@ -15,8 +15,7 @@ private val DarkColorScheme = darkColorScheme(
     onTertiary = Black,
     onBackground = Black,
     onSurface = Black,
-
-    )
+)
 
 @Composable
 fun QuotifyTheme(

@@ -9,4 +9,5 @@ val useCaseModule = module {
     factory { FavQuoteUseCase(get(), get()) }
     factory { GetFavoritesUseCase(get(), get()) }
     factory { UnFavoriteUseCase(get(), get()) }
+    factory { GetThemesUseCase(get()) }
 }

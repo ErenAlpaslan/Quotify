@@ -6,6 +6,6 @@ import org.koin.dsl.module
 
 val themeSelectionModule = module {
     factory { ThemeSelectionScreen() }
-    viewModel { ThemeSelectionViewModel() }
+    viewModel { ThemeSelectionViewModel(get()) }
     factory { (navController: NavController) -> ThemeSelectionNavigationAction(navController = navController) }
 }

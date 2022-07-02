@@ -29,4 +29,8 @@
     <string name="favorites_delete">Kaldır</string>
     <string name="favorites_empty_message">Henüz favorilere eklenen bir alıntı bulunmamakta.</string>
 
+    <!-- Themes -->
+    <string name="themes_title">Temalar</string>
+    <string name="themes_default_text_content">Abcdef</string>
+
 </resources>
