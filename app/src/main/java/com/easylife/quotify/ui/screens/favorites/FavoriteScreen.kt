@@ -48,7 +48,7 @@ class FavoriteScreen : BaseScreen<FavoriteViewModel, FavoriteNavigationActions>(
                         .fillMaxSize()
                 ) {
                     FavoriteList(
-                        list = uiState.favorites ?: emptyList(),
+                        list = uiState.favorites,
                         onShareClicked = {
 
                         },

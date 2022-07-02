@@ -2,6 +2,7 @@ package com.easylife.quotify.ui.screens.favorites
 
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,7 +13,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.easylife.quotify.R
 import com.easylife.quotify.data.models.Quote
@@ -25,20 +28,39 @@ fun FavoriteList(
     onDeleteClicked: (Quote) -> Unit,
     onItemClicked: (Quote) -> Unit
 ) {
-    LazyColumn() {
-        itemsIndexed(items = list, key = {_, item -> item.id  }) { _, item ->
-            FavoriteListItem(
-                item = item,
-                modifier = Modifier.animateItemPlacement(tween(durationMillis = 600)),
-                onShareClicked = {
-                    onShareClicked(item)
-                },
-                onDeleteClicked = {
-                    onDeleteClicked(item)
+    if (list.isNotEmpty()) {
+        LazyColumn() {
+            itemsIndexed(items = list, key = {_, item -> item.id  }) { _, item ->
+                FavoriteListItem(
+                    item = item,
+                    modifier = Modifier.animateItemPlacement(tween(durationMillis = 600)),
+                    onShareClicked = {
+                        onShareClicked(item)
+                    },
+                    onDeleteClicked = {
+                        onDeleteClicked(item)
+                    }
+                ) {
+                    onItemClicked(item)
                 }
-            ) {
-                onItemClicked(item)
             }
+        }
+    }else {
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_empty),
+                contentDescription = "",
+                modifier = Modifier.fillMaxHeight(0.3f)
+            )
+            Text(
+                text = stringResource(id = R.string.favorites_empty_message),
+                textAlign = TextAlign.Center
+            )
         }
     }
 }
